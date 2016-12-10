@@ -9,7 +9,7 @@ var port = process.env.port || 1337;
 passport.use(new Strategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: 'http://localhost:1337/login/facebook/return'
+    callbackURL: 'https://auth-service.azurewebsites.net/login/facebook/return'
 }, function (accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
 }));
@@ -22,6 +22,11 @@ passport.deserializeUser(function (obj, cb) {
     cb(null, obj);
 });
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
