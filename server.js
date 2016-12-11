@@ -35,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/',function(req, res){
-    return res.json({hello:'world'});
+    return res.json(req.user);
 })
 app.get('/login/facebook',
     passport.authenticate('facebook'));
@@ -43,7 +43,7 @@ app.get('/login/facebook',
 app.get('/login/facebook/return',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
     function (req, res) {
-        res.json(req.user)
+        res.redirect('/');
     });
 
 server.listen(port, function () {
