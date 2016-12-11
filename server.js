@@ -9,7 +9,7 @@ var port = process.env.port || 1337;
 passport.use(new Strategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: 'https://auth-service.azurewebsites.net/login/facebook/return'
+    callbackURL: process.env.FB_CLIENT_CALLBACK_URL
 }, function (accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
 }));
